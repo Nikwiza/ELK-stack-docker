@@ -1,8 +1,10 @@
 #Presonal
-./notes.txt
+notes.txt
 
 #Data
-*.csv 
+Containers/volumes/
+Containers/data/
+dataset/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -99,7 +99,7 @@ if __name__ == "__main__":
     python data_set_generator.py -u 300 -n 1000 --path ../dataset
 
     --ntransactions or -n  -> number of transactions
-    --users -u -> number of users
+    --users or -u -> number of users
     --user_file -> path to the users dataset (required if users is not set)
 
     '''
