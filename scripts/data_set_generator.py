@@ -39,6 +39,8 @@ class User:
     name: str
     lastName: str
     possition: UserClass
+    password: str
+    mail: str
 
     @classmethod
     def generate_fake_user(cls):
@@ -47,6 +49,8 @@ class User:
             name=fake.first_name(),
             lastName=fake.last_name(),
             possition=select_user_class_category(),
+            password = fake.password(length=12),
+            mail = fake.email()
         )
 
 
@@ -56,6 +60,8 @@ class ExtraFormSubmission:
     user_id: str
     amount: float
     comment: str
+    company_name:str
+    sent:bool
 
     @classmethod
     def generate_fake_transaction(cls, usr: str):
@@ -64,14 +70,17 @@ class ExtraFormSubmission:
             user_id=usr,
             amount=fake.pyfloat(min_value=0, max_value=1000, right_digits=2),
             comment=fake.sentence(nb_words=random.randint(20, 100)),
+            company_name = fake.company(),
+            sent = random.choice([True, False])
         )
+
 
 
 def generate_fake_transactions(n: int, user: pd.DataFrame):
     tr = []
     filtered_usr = user[
         user["possition"].isin(
-            [UserClass.Finance, UserClass.Teacher, UserClass.Finance]
+            [UserClass.Finance, UserClass.Teacher, UserClass.Deen]
         )
     ]
     if filtered_usr.empty:
@@ -83,6 +92,37 @@ def generate_fake_transactions(n: int, user: pd.DataFrame):
         tr.append(ExtraFormSubmission.generate_fake_transaction(usr=usr))
     return pd.DataFrame(tr)
 
+@dataclass
+class Request:
+    request_id: str
+    user_id: str
+    text: float
+    approved: bool
+
+    @classmethod
+    def generate_fake_request(cls, usr: str):
+        return cls(
+            request_id=fake.uuid4(),
+            user_id=usr,
+            text=fake.sentence(nb_words=random.randint(20, 100)),
+            approved = random.choice([True, False])
+        )
+    
+def generate_fake_requests(n: int, user: pd.DataFrame):
+    req = []
+    filtered_usr = user[
+        user["possition"].isin(
+            [UserClass.Teacher, UserClass.Deen]
+        )
+    ]
+    if filtered_usr.empty:
+        raise ValueError(
+            "There is no Teachers or Deen to make request!"
+        )
+    for i in range(n):
+        usr = filtered_usr['user_id'].sample(1).iloc[0]
+        req.append(Request.generate_fake_request(usr=usr))
+    return pd.DataFrame(req)
 
 def generate_users(nusers: int):
     users = []
@@ -101,6 +141,7 @@ if __name__ == "__main__":
     --ntransactions or -n  -> number of transactions
     --users or -u -> number of users
     --user_file -> path to the users dataset (required if users is not set)
+    --req or -r -> number of requests to generate
 
     '''
     parser = ArgumentParser()
@@ -117,6 +158,13 @@ if __name__ == "__main__":
         "--ntransactions",
         type=int,
         help="Number of transactions to generate as an integer. If you do not wish to generate transactions leave this flag out.",
+        default=0,
+    )
+    parser.add_argument(
+        "-r",
+        "--req",
+        type=int,
+        help="Number of requests to generate as an integer. If you do not wish to generate transactions leave this flag out.",
         default=0,
     )
 
@@ -149,5 +197,9 @@ if __name__ == "__main__":
     if args.ntransactions:
         transactions = generate_fake_transactions(n=args.ntransactions, user=users)
         transactions.to_csv(args.path + '/transactions.csv', index=False)
+
+    if args.req:
+        requests = generate_fake_requests(n=args.req, user=users)
+        transactions.to_csv(args.path + '/requests.csv', index=False)
     
     print('Success! :)')
