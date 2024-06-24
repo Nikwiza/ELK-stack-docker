@@ -68,7 +68,8 @@ public class ProductController {
                                              @RequestParam(value = "boostTerms") String boostTerms) {
         return productService.findByFunctionScore(searchTerm, boostTerms);
     }
-/* 
+/*
+// Izvestaj:
     @GetMapping(value = "/export-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> exportPdf() {
         List<Product> products = productService.findByCustomQuery("brown shorts"); 

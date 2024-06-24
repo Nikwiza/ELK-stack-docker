@@ -3,54 +3,53 @@ package rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "request")
-public class Request {
+@Document(indexName = "requests")
+public class Requests {
     @Id
-    private String request_id;
-    private String user_id;
+    private String requestId;
+    private String userId;
     private String text;
     private Boolean approved;
 
-    public Request(String request_id, String user_id, String text, Boolean approved) {
-        this.request_id = request_id;
-        this.user_id = user_id;
+    public Requests(String request_id, String user_id, String text, Boolean approved) {
+        this.requestId = request_id;
+        this.userId = user_id;
         this.text = text;
         this.approved = approved;
     }
 
-    public Request() {
+    public Requests() {
     }
 
     public String getRequest_id() {
-        return request_id;
+        return requestId;
     }
 
     public void setRequest_id(String request_id) {
-        this.request_id = request_id;
+        this.requestId = request_id;
     }
 
     public String getUser_id() {
-        return user_id;
+        return userId;
     }
 
     public void setUser_id(String user_id) {
-        this.user_id = user_id;
+        this.userId = user_id;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String description) {
+    public void setText(String text) {
         this.text = text;
     }
 
-    public Boolean isApproved() {
+    public Boolean getApproved() {
         return approved;
     }
 
     public void setApproved(Boolean approved) {
         this.approved = approved;
     }
-
 }
