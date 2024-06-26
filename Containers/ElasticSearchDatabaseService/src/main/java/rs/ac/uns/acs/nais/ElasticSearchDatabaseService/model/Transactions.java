@@ -29,10 +29,6 @@ public class Transactions {
         return transactionId;
     }
 
-    public void setTransaction_id(String transaction_id) {
-        this.transactionId = transaction_id;
-    }
-
     public String getUser_id() {
         return userId;
     }

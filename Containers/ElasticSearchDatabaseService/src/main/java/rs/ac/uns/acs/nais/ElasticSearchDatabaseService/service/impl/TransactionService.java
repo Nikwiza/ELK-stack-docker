@@ -38,11 +38,6 @@ public class TransactionService implements ITransactionService {
         return transactionRepository.findById(transaction_id).orElseThrow();
     }
 
-//    @Override
-//    public Transactions updateTransaction(Transactions transactions) {
-//        return transactionRepository.save(transactions);
-//    }
-
     @Override
     public Optional<Transactions> findById(String id) {
         return transactionRepository.findById(id);
@@ -52,5 +47,11 @@ public class TransactionService implements ITransactionService {
     public void deleteById(String transaction_id) {
         transactionRepository.deleteById(transaction_id);
     }
+
+    @Override
+    public List<Transactions> searchByCommentOrCompanyNameFuzzy(String searchTerm) {
+        return transactionRepository.searchByCommentOrCompanyNameFuzzy(searchTerm);
+    }
+
 
 }

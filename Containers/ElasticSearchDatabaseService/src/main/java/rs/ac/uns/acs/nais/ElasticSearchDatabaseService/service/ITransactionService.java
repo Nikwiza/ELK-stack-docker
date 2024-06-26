@@ -12,7 +12,9 @@ public interface ITransactionService {
     Iterable<Transactions> getAllTransactions();
     Optional<Transactions> findById(String Id);
     Transactions getTransactionById(String transaction_id);
-//    Transactions updateTransaction(Transactions transactions);
     void deleteById(String transaction_id);
+
+    List<Transactions> searchByCommentOrCompanyNameFuzzy(String searchTerm);
+
 
 }

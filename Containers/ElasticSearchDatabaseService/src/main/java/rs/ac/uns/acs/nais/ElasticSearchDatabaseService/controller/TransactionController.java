@@ -61,4 +61,9 @@ public class TransactionController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("searchByTerm")
+    public List<Transactions> searchByCommentOrCompanyNameFuzzy(@RequestParam(value = "search") String searchTerm){
+        return transactionService.searchByCommentOrCompanyNameFuzzy(searchTerm);
+    }
+
 }
