@@ -6,6 +6,7 @@ import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.repository.TransactionRep
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.service.ITransactionService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -23,8 +24,8 @@ public class TransactionService implements ITransactionService {
 
     //CRUD services
 
-    public void save(Transactions transactions) {
-        transactionRepository.save(transactions);
+    public Transactions save(Transactions transactions) {
+        return transactionRepository.save(transactions);
     }
 
     @Override
@@ -37,9 +38,14 @@ public class TransactionService implements ITransactionService {
         return transactionRepository.findById(transaction_id).orElseThrow();
     }
 
+//    @Override
+//    public Transactions updateTransaction(Transactions transactions) {
+//        return transactionRepository.save(transactions);
+//    }
+
     @Override
-    public Transactions updateTransaction(Transactions transactions) {
-        return transactionRepository.save(transactions);
+    public Optional<Transactions> findById(String id) {
+        return transactionRepository.findById(id);
     }
 
     @Override

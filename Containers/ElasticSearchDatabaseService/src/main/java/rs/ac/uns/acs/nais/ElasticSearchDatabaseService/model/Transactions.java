@@ -3,7 +3,7 @@ package rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "products")
+@Document(indexName = "transactions")
 public class Transactions {
     @Id
     private String transactionId;
