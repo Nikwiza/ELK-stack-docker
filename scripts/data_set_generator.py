@@ -96,7 +96,7 @@ def generate_fake_transactions(n: int, user: pd.DataFrame):
 class Request:
     request_id: str
     user_id: str
-    text: float
+    text: str
     approved: bool
 
     @classmethod
@@ -200,6 +200,6 @@ if __name__ == "__main__":
 
     if args.req:
         requests = generate_fake_requests(n=args.req, user=users)
-        transactions.to_csv(args.path + '/requests.csv', index=False)
+        requests.to_csv(args.path + '/requests.csv', index=False)
     
     print('Success! :)')
