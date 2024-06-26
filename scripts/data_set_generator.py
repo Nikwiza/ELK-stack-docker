@@ -35,7 +35,7 @@ def select_user_class_category() -> UserClass:
 
 @dataclass
 class User:
-    user_id: str
+    userId: str
     name: str
     lastName: str
     possition: UserClass
@@ -45,7 +45,7 @@ class User:
     @classmethod
     def generate_fake_user(cls):
         return cls(
-            user_id=fake.uuid4(),
+            userId=fake.uuid4(),
             name=fake.first_name(),
             lastName=fake.last_name(),
             possition=select_user_class_category(),
@@ -56,8 +56,8 @@ class User:
 
 @dataclass
 class ExtraFormSubmission:
-    transaction_id: str
-    user_id: str
+    transactionId: str
+    userId: str
     amount: float
     comment: str
     company_name:str
@@ -66,8 +66,8 @@ class ExtraFormSubmission:
     @classmethod
     def generate_fake_transaction(cls, usr: str):
         return cls(
-            transaction_id=fake.uuid4(),
-            user_id=usr,
+            transactionId=fake.uuid4(),
+            userId=usr,
             amount=fake.pyfloat(min_value=0, max_value=1000, right_digits=2),
             comment=fake.sentence(nb_words=random.randint(20, 100)),
             company_name = fake.company(),
@@ -88,22 +88,22 @@ def generate_fake_transactions(n: int, user: pd.DataFrame):
             "There is no Teachers, Deens or Finance staff for transaction!"
         )
     for i in range(n):
-        usr = filtered_usr['user_id'].sample(1).iloc[0]
+        usr = filtered_usr['userId'].sample(1).iloc[0]
         tr.append(ExtraFormSubmission.generate_fake_transaction(usr=usr))
     return pd.DataFrame(tr)
 
 @dataclass
 class Request:
-    request_id: str
-    user_id: str
+    requestId: str
+    userId: str
     text: str
     approved: bool
 
     @classmethod
     def generate_fake_request(cls, usr: str):
         return cls(
-            request_id=fake.uuid4(),
-            user_id=usr,
+            requestId=fake.uuid4(),
+            userId=usr,
             text=fake.sentence(nb_words=random.randint(20, 100)),
             approved = random.choice([True, False])
         )
@@ -120,7 +120,7 @@ def generate_fake_requests(n: int, user: pd.DataFrame):
             "There is no Teachers or Deen to make request!"
         )
     for i in range(n):
-        usr = filtered_usr['user_id'].sample(1).iloc[0]
+        usr = filtered_usr['userId'].sample(1).iloc[0]
         req.append(Request.generate_fake_request(usr=usr))
     return pd.DataFrame(req)
 
