@@ -10,8 +10,10 @@ public class Requests {
     private String userId;
     private String text;
     private Boolean approved;
+    private Integer likes;
 
-    public Requests(String request_id, String user_id, String text, Boolean approved) {
+    public Requests(String request_id, String user_id, String text, Boolean approved, Integer likes) {
+        this.likes = likes;
         this.requestId = request_id;
         this.userId = user_id;
         this.text = text;
@@ -51,5 +53,13 @@ public class Requests {
 
     public void setApproved(Boolean approved) {
         this.approved = approved;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 }
