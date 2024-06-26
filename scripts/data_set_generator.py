@@ -98,6 +98,7 @@ class Request:
     userId: str
     text: str
     approved: bool
+    likes: int
 
     @classmethod
     def generate_fake_request(cls, usr: str):
@@ -105,7 +106,8 @@ class Request:
             requestId=fake.uuid4(),
             userId=usr,
             text=fake.sentence(nb_words=random.randint(20, 100)),
-            approved = random.choice([True, False])
+            approved = random.choice([True, False]),
+            likes = random.randint(0, 1000)
         )
     
 def generate_fake_requests(n: int, user: pd.DataFrame):
