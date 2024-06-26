@@ -17,14 +17,19 @@ public class RequestController {
         this.requestService = requestService;
     }
 
-    @PostMapping
-    public void addRequest(@RequestBody Requests requests) {
-        requestService.save(requests);
-    }
-
     @GetMapping("findByUserId")
     public List<Requests> findByUserId(@RequestParam(value = "userId") String userId) {
         return requestService.findByUserId(userId);
     }
 
+    // CRUD endpoints
+    @PostMapping
+    public void addRequest(@RequestBody Requests requests) {
+        requestService.save(requests);
+    }
+
+    @GetMapping
+    public Iterable<Requests> findAllRequests(){return requestService.getAllRequests();}
+
+    
 }

@@ -17,12 +17,34 @@ public class RequestService implements IRequestService {
         this.requestRepository = productRepository;
     }
 
+    public List<Requests> findByUserId(String user_id) {
+        return requestRepository.findByUserId(user_id);
+    }
+
+    //CRUD services
+
     public void save(Requests requests) {
         requestRepository.save(requests);
     }
 
-    public List<Requests> findByUserId(String user_id) {
-        return requestRepository.findByUserId(user_id);
+    @Override
+    public Iterable<Requests> getAllRequests() {
+        return requestRepository.findAll();
+    }
+
+    @Override
+    public Requests getRequestById(String request_id) {
+        return requestRepository.findById(request_id).orElseThrow();
+    }
+
+    @Override
+    public Requests updateRequest(Requests requests) {
+        return requestRepository.save(requests);
+    }
+
+    @Override
+    public void deleteById(String request_id) {
+        requestRepository.deleteById(request_id);
     }
 
 

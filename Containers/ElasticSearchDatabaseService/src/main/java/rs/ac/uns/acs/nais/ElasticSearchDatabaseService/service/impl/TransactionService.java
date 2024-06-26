@@ -17,12 +17,34 @@ public class TransactionService implements ITransactionService {
         this.transactionRepository = transactionRepository;
     }
 
+    public List<Transactions> findByUserId(String user_id) {
+        return transactionRepository.findByUserId(user_id);
+    }
+
+    //CRUD services
+
     public void save(Transactions transactions) {
         transactionRepository.save(transactions);
     }
 
-    public List<Transactions> findByUserId(String user_id) {
-        return transactionRepository.findByUserId(user_id);
+    @Override
+    public Iterable<Transactions> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    @Override
+    public Transactions getTransactionById(String transaction_id) {
+        return transactionRepository.findById(transaction_id).orElseThrow();
+    }
+
+    @Override
+    public Transactions updateTransaction(Transactions transactions) {
+        return transactionRepository.save(transactions);
+    }
+
+    @Override
+    public void deleteById(String transaction_id) {
+        transactionRepository.deleteById(transaction_id);
     }
 
 }
