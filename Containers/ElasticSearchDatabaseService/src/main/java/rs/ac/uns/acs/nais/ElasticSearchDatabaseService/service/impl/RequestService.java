@@ -48,4 +48,29 @@ public class RequestService implements IRequestService {
     }
 
 
+
+    @Override
+    public List<Requests> notApprovedRequests() {
+        return requestRepository.notApprovedRequests();
+    }
+
+    @Override
+    public List<Requests> findByCustomQueryAndUserId(String query, String userId) {
+        return requestRepository.findByCustomQueryAndUserId(query, userId);
+    }
+
+    @Override
+    public List<Requests> findUserAndUserTags(String searchTerm) {
+        return requestRepository.findUserAndUserTags(searchTerm);
+    }
+
+    @Override
+    public List<Requests> findByUserIdAndTextNotAndOptional(String userId, String mustNotTerms, String shouldTerms) {
+        return requestRepository.findByUserIdAndTextNotAndOptional(userId, mustNotTerms, shouldTerms);
+    }
+
+    //Queries
+
+
+
 }

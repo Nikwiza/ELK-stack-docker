@@ -2,10 +2,12 @@ package rs.ac.uns.acs.nais.ElasticSearchDatabaseService.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.dto.AmountStatDTO;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model.Transactions;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.service.impl.TransactionService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -64,6 +66,24 @@ public class TransactionController {
     @GetMapping("searchByTerm")
     public List<Transactions> searchByCommentOrCompanyNameFuzzy(@RequestParam(value = "search") String searchTerm){
         return transactionService.searchByCommentOrCompanyNameFuzzy(searchTerm);
+    }
+
+
+    @GetMapping("/lessThan")
+    public List<Transactions> findLesserThan(@RequestParam(value = "amount") double amount) {
+        return transactionService.findLesserThan(amount);
+    }
+
+    @GetMapping("/moreThan")
+    public List<Transactions> findGreaterThan(@RequestParam(value = "amount") double amount) {
+        return transactionService.findGreaterThan(amount);
+    }
+
+    @GetMapping("/searchByTerms")
+    public List<Transactions> findByCompanyNameAndCommentNotAndOptional(@RequestParam(value = "name") String companyName,
+                                                                        @RequestParam(value = "mustNotTerms") String mustNotTerms,
+                                                                        @RequestParam(value = "shouldTerms") String shouldTerms) {
+        return transactionService.findByCompanyNameAndCommentNotAndOptional(companyName, mustNotTerms, shouldTerms);
     }
 
 }

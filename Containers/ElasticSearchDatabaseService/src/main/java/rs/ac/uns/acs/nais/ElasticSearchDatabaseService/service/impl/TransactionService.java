@@ -1,11 +1,13 @@
 package rs.ac.uns.acs.nais.ElasticSearchDatabaseService.service.impl;
 
 import org.springframework.stereotype.Service;
+import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.dto.AmountStatDTO;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model.Transactions;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.repository.TransactionRepository;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.service.ITransactionService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -48,9 +50,27 @@ public class TransactionService implements ITransactionService {
         transactionRepository.deleteById(transaction_id);
     }
 
+    // QUERIES
+
     @Override
     public List<Transactions> searchByCommentOrCompanyNameFuzzy(String searchTerm) {
         return transactionRepository.searchByCommentOrCompanyNameFuzzy(searchTerm);
+    }
+
+    @Override
+    public List<Transactions> findByCompanyNameAndCommentNotAndOptional(String companyName, String mustNotTerms, String shouldTerms) {
+        return transactionRepository.findByCompanyNameAndCommentNotAndOptional(companyName, mustNotTerms, shouldTerms);
+    }
+
+    @Override
+    public List<Transactions> findLesserThan(double Amount) {
+        return transactionRepository.findLesserThan(Amount);
+    }
+
+
+    @Override
+    public List<Transactions> findGreaterThan(double Amount) {
+        return transactionRepository.findGreaterThan(Amount);
     }
 
 
