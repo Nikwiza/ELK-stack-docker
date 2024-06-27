@@ -1,11 +1,14 @@
 package rs.ac.uns.acs.nais.ElasticSearchDatabaseService.service.impl;
 
+import org.apache.coyote.Request;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model.Requests;
+import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model.Transactions;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.repository.RequestRepository;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.service.IRequestService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -22,9 +25,12 @@ public class RequestService implements IRequestService {
     }
 
     //CRUD services
+    public Optional<Requests> findById(String id) {
+        return requestRepository.findById(id);
+    }
 
-    public void save(Requests requests) {
-        requestRepository.save(requests);
+    public Requests save(Requests requests) {
+        return requestRepository.save(requests);
     }
 
     @Override

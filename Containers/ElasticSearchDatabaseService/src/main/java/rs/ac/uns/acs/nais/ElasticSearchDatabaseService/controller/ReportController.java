@@ -30,7 +30,6 @@ public class ReportController {
 // Izvestaj:
     @GetMapping(value = "/export-less-than", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> exportPdf() {
-        List<Transactions> transactions = transactionService.findLesserThan(10);
         try {
             byte[] pdfContents = reportService.export_report();
 

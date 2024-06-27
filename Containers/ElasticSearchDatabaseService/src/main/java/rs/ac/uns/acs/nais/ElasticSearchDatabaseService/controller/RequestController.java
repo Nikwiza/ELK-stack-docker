@@ -1,12 +1,13 @@
 package rs.ac.uns.acs.nais.ElasticSearchDatabaseService.controller;
 
-import org.bouncycastle.cert.ocsp.Req;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model.Requests;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.model.Transactions;
 import rs.ac.uns.acs.nais.ElasticSearchDatabaseService.service.impl.RequestService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/requests.json")
@@ -18,12 +19,42 @@ public class RequestController {
         this.requestService = requestService;
     }
 
+
+
+    //CRUD
+
+    public Optional<Requests> findById(String id) {
+        return requestService.findById(id);
+    }
+
+
+    @DeleteMapping
+    public void deleteById(@RequestParam(value = "Id") String Id){
+        requestService.deleteById(Id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Requests> updateById(@PathVariable String id, @RequestBody Requests requests){
+        Optional<Requests> requests1 = requestService.findById(id);
+        if(requests1.isPresent()){
+            Requests existingRequest = requests1.get();
+            existingRequest.setApproved(requests.getApproved());
+            existingRequest.setLikes(requests.getLikes());
+            existingRequest.setText(requests.getText());
+            existingRequest.setUser_id(requests.getUser_id());
+
+            return ResponseEntity.ok(requestService.save(existingRequest));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+
     @GetMapping("findByUserId")
     public List<Requests> findByUserId(@RequestParam(value = "userId") String userId) {
         return requestService.findByUserId(userId);
     }
 
-    // CRUD endpoints
     @PostMapping
     public void addRequest(@RequestBody Requests requests) {
         requestService.save(requests);
